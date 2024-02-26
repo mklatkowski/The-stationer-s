@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SklepPapierniczy.Models.Article>
+
+@{
+    ViewData["Title"] = "Sell Raport";
+}
+
+<h1>Sell Raport</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Quantity of sold Article
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal totalAmount = 0;
+        }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @((item.Quantity * item.Price).ToString())
+                    @{
+                        var itemTotal = item.Quantity * item.Price;
+                        totalAmount += itemTotal;
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3"></td>
+            <td>
+                <strong>Total Amount:</strong> @totalAmount.ToString()
+            </td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<SklepPapierniczy.Models.Category>
+
+<link rel="stylesheet" href="/css/menu.css" />
+
+<h1>Shop Categories</h1>
+
+    @foreach (var category in Model)
+    {
+        <p><a class="nav-link-menu" asp-action="Products" asp-route-categoryId="@category.Id">@category.Name</a></p>
+    }

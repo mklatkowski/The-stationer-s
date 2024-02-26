@@ -1,0 +1,36 @@
+﻿@model SklepPapierniczy.Models.ShopDelivery
+
+<h2>Delivery Details</h2>
+
+<div>
+    <h4>Delivery Information</h4>
+    <p>Producent: @Model.Producent</p>
+    <p>Status: @Model.Status</p>
+    <p>Delivery Date: @Model.DeliveryDate.ToShortDateString()</p>
+    <p>Delivery Time: @Model.DeliveryTime.ToShortDateString()</p>
+</div>
+
+<h4>Articles</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Article Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var article in Model.Articles)
+        {
+            <tr>
+                <td>@article.Article.Name</td>
+                <td>@article.Quantity</td>
+                <td>@article.Article.Price</td>
+                <td>@(article.Quantity * article.Article.Price)</td>
+            </tr>
+        }
+    </tbody>
+
+    <p>Summary: @Model.Summary</p>
+</table>

@@ -1,0 +1,118 @@
+﻿@model SklepPapierniczy.Models.ShopDelivery
+
+<h1>Shopping Cart</h1>
+
+@if (Model.Articles.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Articles.First().Article.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Articles.First().Article.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Articles.First().Quantity)
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Articles)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => article.Article.Name)
+                    </td>
+                    <td>
+                        <form asp-controller="Order" asp-action="UpdateCart" method="post">
+                            <input type="hidden" name="articleId" value="@article.ArticleId" />
+                            <input type="number" name="quantity" value="@article.Quantity" min="0" pattern="\d+" />
+                        </form>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => article.Article.Price)
+                    </td>
+                    <td>
+                        @((article.Quantity * article.Article.Price).ToString())
+                    </td>
+                    <td>
+                        <form asp-controller="Order" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="articleId" value="@article.ArticleId" />
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.Summary != null){
+        <h3>Summary: @Model.Summary</h3>
+    }
+      <form asp-controller="Order" asp-action="UpdateCart" method="post">
+        <button type="submit" formaction="@Url.Action("Purchase", "Order")" class="btn btn-primary">Purchase</button>
+    </form>
+    @*     <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Delete article</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ArticleName</td>
+                    <td>
+                        <form asp-controller="Shop" asp-action="UpdateCart" method="post">
+                            <input type="hidden" name="articleId" value="@item.ArticleId" />
+                            <input type="number" name="quantity" value="@item.Quantity" onkeydown="javascript: return false;" />
+                        </form>
+                    </td>
+                    <td>@item.ArticlePrice</td>
+                    <td>@(item.Quantity * item.ArticlePrice)</td>
+                    <td>
+                        <form asp-controller="Shop" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="articleId" value="@item.ArticleId" />
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table> *@
+
+    @* <p>Total Cost: @Model.TotalCost</p> *@
+}
+else
+{
+    <p>Your shopping cart is empty.</p>
+}
+
+<a asp-action="Index">Continue Shopping</a>
+
+<script>
+    document.querySelectorAll('input[name="quantity"]').forEach(function (element) {
+        element.addEventListener('change', function () {
+            if (this.validity.valid) {
+                this.closest('form').submit();
+            } else {
+                // Optional: Handle invalid input (display error message, etc.)
+                alert('Please enter a valid positive number.');
+                this.value = ""; // Clear the invalid input
+            }
+        });
+    });
+</script>
+

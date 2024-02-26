@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SklepPapierniczy.Models.ClientDelivery>
+
+@{
+    ViewData["Title"] = "Deliveries Raport";
+}
+
+<style>
+    .delivery-data {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .article-data {
+        font-size: 14px;
+    }
+</style>
+
+<h1>Delivery Raport</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Summary)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr class="delivery-data">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Producent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Summary)
+                    </td>
+                </tr>
+
+                @foreach (var article in item.Articles)
+                {
+                    <tr class="article-data">
+                        <td></td>
+                        <td></td>
+                        <td>@article.Article.Name</td>
+                        <td>@article.Article.Price</td>
+                        <td>@article.Quantity</td>
+                        <td>@(article.Article.Price * article.Quantity)</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="6"></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div id="successAlert" class="alert alert-success" style="display: none;">
+    <p>Raport generated successfully.</p>
+</div>
+
+<form id="generatePdfForm" asp-action="GeneratePdfDeliveries" method="post">
+    <button type="submit" class="btn btn-primary">Generuj Raport PDF</button>
+</form>
+
+<script>
+    document.getElementById('generatePdfForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        document.getElementById('successAlert').style.display = 'block';
+        this.submit();
+    });
+</script>

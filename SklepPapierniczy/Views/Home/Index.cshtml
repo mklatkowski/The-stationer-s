@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="/css/menu.css" />
+
+<style></style>
+<div class="text-center">
+    <h1 class="display-4">Warehouse manager</h1>
+    <p><a class="nav-link nav-link-menu" asp-area="" asp-controller="Articles" asp-action="Index">Available Products</a></p>
+    <p><a class="nav-link nav-link-menu" asp-area="" asp-controller="ClientDeliveries" asp-action="Index">Delivery Manager</a></p>
+    <p><a class="nav-link nav-link-menu" asp-area="" asp-controller="Order" asp-action="Cart">Order products to shop</a></p>
+    <p><a class="nav-link nav-link-menu" asp-area="" asp-controller="Raport" asp-action="Index">Generate raport</a></p>
+</div>

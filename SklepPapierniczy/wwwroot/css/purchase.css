@@ -1,0 +1,70 @@
+﻿body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.button-container {
+    text-align: center; /* Centruj przyciski */
+}
+
+.animated-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    transition: transform 0.3s ease-out;
+    margin: 10px; /* Dodaj margines dla odstępu między przyciskami */
+    width: 200px; /* Ustaw szerokość przycisków */
+    text-align: center;
+}
+
+.processing-spinner {
+    display: none;
+    margin-top: 20px;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: auto;
+}
+
+.animated-button:hover {
+    transform: scale(1.1);
+}
+
+/* Animacja obrotu bez keyframes */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animacja obrotu bez keyframes - dla przeglądarek, które nie obsługują keyframes */
+.spin {
+    from
+
+{
+    transform: rotate(0deg);
+}
+
+to {
+    transform: rotate(360deg);
+}
+}
+
+p {
+
+    align-items:center
+}
+

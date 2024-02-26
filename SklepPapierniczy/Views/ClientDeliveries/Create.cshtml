@@ -1,0 +1,120 @@
+﻿@model SklepPapierniczy.Models.ClientDelivery
+
+@* @{
+    ViewData["Title"] = "Create";
+} *@
+
+<h1>Create</h1>
+
+<h4>ClientDelivery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Producent" class="control-label"></label>
+                <input asp-for="Producent" class="form-control" />
+                <span asp-validation-for="Producent" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DeliveryTime" class="control-label"></label>
+                <input asp-for="DeliveryTime" class="form-control" />
+                <span asp-validation-for="DeliveryTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DeliveryDate" class="control-label"></label>
+                <input asp-for="DeliveryDate" class="form-control" />
+                <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Summary" class="control-label"></label>
+                <input asp-for="Summary" class="form-control" />
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var addedArticles = [];
+
+            document.getElementById('addArticleButton').addEventListener('click', function () {
+                var selectedArticleId = document.getElementById('articleDropdown').value;
+
+                var isArticleAdded = addedArticles.some(function (article) {
+                    return article.id === selectedArticleId;
+                });
+
+                if (!isArticleAdded) {
+                    addedArticles.push({
+                        id: selectedArticleId,
+                        name: document.getElementById('articleDropdown').options[document.getElementById('articleDropdown').selectedIndex].text,
+                        quantity: 0 // Domyślnie ustaw ilość na 0, można dostosować do własnych potrzeb
+                    });
+
+                    refreshAddedArticlesList();
+                }
+            });
+
+            function refreshAddedArticlesList() {
+                var addedArticlesList = document.getElementById('addedArticlesList');
+                addedArticlesList.innerHTML = '';
+
+                addedArticles.forEach(function (article) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = article.name + ' - Quantity: ' + article.quantity;
+
+                    var editButton = document.createElement('button');
+                    editButton.textContent = 'Edit Quantity';
+                    editButton.addEventListener('click', function () {
+                        var newQuantity = prompt('Enter new quantity:', article.quantity);
+                        if (newQuantity !== null && !isNaN(newQuantity) && newQuantity >= 0) {
+                            article.quantity = parseInt(newQuantity);
+                            refreshAddedArticlesList();
+                        } else {
+                            alert('Invalid quantity. Please enter a valid number greater than or equal to 0.');
+                        }
+                    });
+
+                    listItem.appendChild(editButton);
+                    addedArticlesList.appendChild(listItem);
+                });
+            }
+        });
+
+        document.getElementById('createForm').addEventListener('submit', function () {
+            var selectedArticleIds = addedArticles.map(function (article) {
+                return article.id;
+            });
+
+            var articleQuantities = addedArticles.map(function (article) {
+                return article.quantity;
+            });
+
+            document.getElementById('selectedArticleIds').value = selectedArticleIds.join(',');
+            document.getElementById('articleQuantities').value = articleQuantities.join(',');
+
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/purchase.css" />
+</head>
+<body>
+
+<div class="button-container">
+    <h1>Purchase</h1>
+    <button type="button" class="btn btn-success animated-button" onclick="processTransaction(this)">BLIK</button>
+    <button type="button" class="btn btn-warning animated-button" onclick="processTransaction(this)">Traditional Transfer</button>
+    <button type="button" class="btn btn-danger animated-button" onclick="processTransaction(this)">Cash</button>
+
+    <div class="processing-spinner" id="processingSpinner">
+        <div class="spinner spin"></div>
+    </div>
+</div>
+
+    <script>
+        function processTransaction(button) {
+            // Ukryj przyciski
+            document.querySelectorAll('.animated-button').forEach(function (btn) {
+                btn.style.display = 'none';
+            });
+
+            // Pokaż spinner
+            var spinner = document.getElementById('processingSpinner');
+            spinner.style.display = 'flex'; // Ustawiamy flex, aby centrować tekst w pionie
+
+            // Symulacja przetwarzania transakcji przez 10 sekund
+            setTimeout(function () {
+                // Ukryj spinner
+                spinner.style.display = 'none';
+
+                // Pokaż ponownie przyciski
+                document.querySelectorAll('.animated-button').forEach(function (btn) {
+                    btn.style.display = 'inline-block';
+                });
+
+                // Przekieruj na inny widok i wykonaj akcję kontrolera
+                redirectToAnotherView();
+            }, 3000); // 10 sekund (możesz dostosować czas do swoich potrzeb)
+
+            // Funkcja do przekierowania na inny widok i wykonania akcji kontrolera
+            function redirectToAnotherView() {
+                // Przykładowa ścieżka do kontrolera i akcji
+                var controllerActionUrl = '/Order/Summary';
+
+                // Przekieruj na inny widok
+                window.location.href = controllerActionUrl;
+            }
+        }
+    </script>
+
+</body>
+</html>
